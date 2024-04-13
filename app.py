@@ -7,56 +7,28 @@ from pydantic import BaseModel
 from flask_restful import reqparse
 from flask import Flask, request, jsonify, render_template
 from apiflask import APIFlask
-import os
+import os, json, requests
 
 app = APIFlask(__name__, spec_path='/openapi.json')
 app.config['OPENAPI_VERSION'] = '3.0.2'
 app.config['SYNC_LOCAL_SPEC'] = True
 app.config['LOCAL_SPEC_PATH'] = os.path.join(app.root_path, 'openapi.json')
 
-users = {
-    'kunal': '1234',
-    'user2': 'password2'
-}
+@app.route('/chat', methods=['POST'])
+def chat():
+    params = request.get_json()
+    message = params.get('message')
+    history = params.get('history')
 
-products = {"database": 5 , "cloud" : 2}
-languages = languages = [
-    "English", "Spanish", "French", "German", "Italian", "Portuguese", "Swedish"
-]
+    if not message:
+        return jsonify({"message": "Missing 'message' parameter"}), 400
 
-@app.route("/")
-def home():
-    return render_template('login.html')
-
-@app.route('/handle_get', methods=['GET'])
-def handle_get():
-    if request.method == 'GET':
-        username = request.args['username']
-        password = request.args['password']
-        print(username, password)
-        if username in users and users[username] == password:
-            return '<h1>Welcome!!!</h1>'
-        else:
-            return '<h1>invalid credentials!</h1>'
-    else:
-        return render_template('login.html')
-
-
-# For handling post request form we can get the form
-# inputs value by using POST attribute.
-# this values after submitting you will never see in the urls.
-@app.route('/handle_post', methods=['POST'])
-def handle_post():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        print(username, password)
-        if username in users and users[username] == password:
-            return '<h1>Welcome!!!</h1>'
-        else:
-            return '<h1>invalid credentials!</h1>'
-    else:
-        return render_template('login.html')
+    response_data = {
+        "message": message,
+        "history": history,
+        "response": 'OK something 1',
+    }
+    return jsonify(response_data), 200
 
 
 def parse_arg_from_requests(arg, **kwargs):

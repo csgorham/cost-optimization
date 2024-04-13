@@ -1,63 +1,128 @@
 {
-  "info": {
-    "title": "APIFlask",
-    "version": "0.1.0"
-  },
   "openapi": "3.0.2",
-  "paths": {
-    "/": {
-      "get": {
-        "parameters": [],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            },
-            "description": "Successful response"
-          }
-        },
-        "summary": "Home"
-      }
-    },
-    "/handle_get": {
-      "get": {
-        "parameters": [],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            },
-            "description": "Successful response"
-          }
-        },
-        "summary": "Handle Get"
-      }
-    },
-    "/handle_post": {
-      "post": {
-        "parameters": [],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            },
-            "description": "Successful response"
-          }
-        },
-        "summary": "Handle Post"
-      }
-    }
+  "info": {
+    "title": "Chat API",
+    "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "http://127.0.0.1:5000/"
+      "url": "https://frozen-island-72595-0d52ba9f677d.herokuapp.com/"
     }
   ],
-  "tags": []
+  "paths": {
+    "/chat": {
+      "post": {
+        "summary": "Send a message to the chat and receive a response",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "description": "The message to send to the chat"
+                  },
+                  "history": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "response": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "description": "The chat history (optional)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with the chat message, response, and updated history",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "The message sent to the chat"
+                    },
+                    "response": {
+                      "type": "string",
+                      "description": "The chat response"
+                    },
+                    "history": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          },
+                          "response": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The updated chat history"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required parameter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Error message explaining the missing parameter"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Error message describing the internal issue"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKey": {
+        "type": "apiKey",
+        "name": "APIKey",
+        "in": "header"
+      }
+    }
+  }
 }
