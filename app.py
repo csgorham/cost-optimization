@@ -7,11 +7,16 @@ from pydantic import BaseModel
 from flask_restful import reqparse
 from flask import Flask, request, jsonify
 from apiflask import APIFlask
+from os
+
 app = APIFlask(__name__, spec_path='/openapi.json')
 app.config['OPENAPI_VERSION'] = '3.0.2'
-#app.config['SPEC_FORMAT'] = 'yaml'
 
-languages = [
+app.config['SYNC_LOCAL_SPEC'] = True
+app.config['LOCAL_SPEC_PATH'] = os.path.join(app.root_path, 'openapi.json')
+
+products = {"database": 5 , "cloud" : 2}
+languages = languages = [
     "English", "Spanish", "French", "German", "Italian", "Portuguese", "Swedish"
 ]
 
@@ -21,8 +26,11 @@ def home():
             "status": "online"
         })
 
-@app.route("/languages")
-def get_languages():
+@app.route("/get_product", methods=["GET"])
+def get_product():
+
+    #product = request.json.get('message')
+    #print(product)
     return jsonify({
         "languages": languages
     })
@@ -35,4 +43,4 @@ def parse_arg_from_requests(arg, **kwargs):
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
-    #app.run(debug=True)
+#    app.run(debug=True)
