@@ -15,10 +15,10 @@ class DeveloperPricing(BaseModel):
     db: str
     ml: str
 
-@app.route("/calc_pricing_options', methods=["POST", "GET"])
+@app.route('/calc_pricing_options', methods=["POST", "GET"])
 def calc_pricing_options():
     products = request.json.get('products')
-    options = "Options " + products
+    options = "Options " #+ products
     return  options #jsonify({"message": "Hello World!"})
 
 if __name__ == "__main__":
