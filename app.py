@@ -34,7 +34,7 @@ def chat():
     #history = params.get('history')
 
     RAM = params.get('RAM')
-    RAM = int(''.join(filter(lambda x: x.isdigit() or x in '.', RAM)))
+    RAM = float(''.join(filter(lambda x: x.isdigit() or x in '.', RAM)))
 
     VCPU = params.get('VCPU')
     VCPU = int(''.join(filter(lambda x: x.isdigit(), VCPU)))
