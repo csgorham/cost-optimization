@@ -33,10 +33,11 @@ def chat():
     #message = params.get('message')
     #history = params.get('history')
 
-    RAM = int(params.get('RAM'))
-    VCPU = int(params.get('VCPU'))
-    #RAM = 8
-    #VCPU = 2
+    RAM = params.get('RAM')
+    RAM = int(''.join(filter(lambda x: x.isdigit(), RAM)))
+
+    VCPU = params.get('VCPU')
+    VCPU = int(''.join(filter(lambda x: x.isdigit(), VCPU)))
 
     df_ec2_match = df_ec2[df_ec2['VCPU'] == VCPU]
     df_ec2_match = df_ec2_match[df_ec2_match['RAM'] == RAM]
@@ -48,33 +49,67 @@ def chat():
 
     df_together = pd.DataFrame()
 
-    df_together = pd.concat([df_together, pd.DataFrame(['Azure', df_azure_match['INSTANCE'].iloc[0],
-                                                        df_azure_match['HOURLY ON DEMAND'].iloc[0]]).T],
-                            ignore_index=True)
+    if df_azure_match.empty:
+        pass
+    else:
+        if len(df_azure_match) >= 2:
+            df_together = pd.concat([df_together, pd.DataFrame(['Azure', df_azure_match['INSTANCE'].iloc[0],
+                                                                df_azure_match['HOURLY ON DEMAND'].iloc[0]]).T],
+                                    ignore_index=True)
 
-    df_together = pd.concat([df_together, pd.DataFrame(['Azure', df_azure_match['INSTANCE'].iloc[-1],
-                                                        df_azure_match['HOURLY ON DEMAND'].iloc[-1]]).T],
-                            ignore_index=True)
+            df_together = pd.concat([df_together, pd.DataFrame(['Azure', df_azure_match['INSTANCE'].iloc[-1],
+                                                                df_azure_match['HOURLY ON DEMAND'].iloc[-1]]).T],
+                                    ignore_index=True)
+        elif len(df_azure_match) == 1:
+            df_together = pd.concat([df_together, pd.DataFrame(['Azure', df_azure_match['INSTANCE'].iloc[0],
+                                                                df_azure_match['HOURLY ON DEMAND'].iloc[0]]).T],
+                                    ignore_index=True)
 
-    df_together = pd.concat([df_together, pd.DataFrame(['AWS', df_ec2_match['INSTANCE'].iloc[0],
-                                                        df_ec2_match['HOURLY ON DEMAND'].iloc[0]]).T],
-                            ignore_index=True)
+    if df_ec2_match.empty:
+        pass
+    else:
+        if len(df_ec2_match) >= 2:
+            df_together = pd.concat([df_together, pd.DataFrame(['AWS', df_ec2_match['INSTANCE'].iloc[0],
+                                                                df_ec2_match['HOURLY ON DEMAND'].iloc[0]]).T],
+                                    ignore_index=True)
 
-    df_together = pd.concat([df_together, pd.DataFrame(['AWS', df_ec2_match['INSTANCE'].iloc[-1],
-                                                        df_ec2_match['HOURLY ON DEMAND'].iloc[-1]]).T],
-                            ignore_index=True)
-    df_together.columns = ['provider', 'name', 'hourly-on-demand']
-    df_together['hourly-on-demand'] = pd.to_numeric(df_together['hourly-on-demand'])
-    df_together = df_together.sort_values(by=['hourly-on-demand'])
+            df_together = pd.concat([df_together, pd.DataFrame(['AWS', df_ec2_match['INSTANCE'].iloc[-1],
+                                                                df_ec2_match['HOURLY ON DEMAND'].iloc[-1]]).T],
+                                    ignore_index=True)
+        elif len(df_ec2_match) == 1:
+            df_together = pd.concat([df_together, pd.DataFrame(['AWS', df_ec2_match['INSTANCE'].iloc[0],
+                                                                df_ec2_match['HOURLY ON DEMAND'].iloc[0]]).T],
+                                    ignore_index=True)
 
-    response = "Your lowest cost option for " + str(RAM) + "Gb RAM and " + str(VCPU) + " vCPU is " + \
-               df_together['name'].iloc[0] + " from " + \
-               df_together['provider'].iloc[0] + " which costs $" + str(df_together['hourly-on-demand'].iloc[0]) + \
-               " hourly on demand. The lowest cost option from " + df_together['provider'].iloc[1] + " is " + \
-               df_together['name'].iloc[1] + \
-               " which costs $" + str(df_together['hourly-on-demand'].iloc[1]) + " hourly on demand."
-    print(response)
+    if df_together.empty:
+        pass
+    else:
+        df_together.columns = ['provider', 'name', 'hourly-on-demand']
+        df_together['hourly-on-demand'] = pd.to_numeric(df_together['hourly-on-demand'])
+        df_together = df_together.sort_values(by=['hourly-on-demand'])
 
+    if (df_azure_match.empty == False) and (df_ec2_match.empty == False):
+        response = "Your lowest cost option for " + str(RAM) + "Gb RAM and " + str(VCPU) + " vCPU is " + \
+                   df_together['name'].iloc[0] + " from " + \
+                   df_together['provider'].iloc[0] + " which costs $" + str(df_together['hourly-on-demand'].iloc[0]) + \
+                   " hourly on demand. The lowest cost option from " + df_together['provider'].iloc[1] + " is " + \
+                   df_together['name'].iloc[1] + \
+                   " which costs $" + str(df_together['hourly-on-demand'].iloc[1]) + " hourly on demand."
+
+    elif (df_ec2_match.empty == False) and (df_azure_match.empty == True):
+        response = "Azure does not provide this option. Your lowest cost option for " + str(RAM) + "Gb RAM and " + str(
+            VCPU) + " vCPU is " + df_together['name'].iloc[0] + " from " + \
+                   df_together['provider'].iloc[0] + " which costs $" + str(df_together['hourly-on-demand'].iloc[0]) + \
+                   " hourly on demand."
+
+    elif (df_azure_match.empty == False) and (df_ec2_match.empty == True):
+        response = "AWS does not provide this option. Your lowest cost option for " + str(RAM) + "Gb RAM and " + str(
+            VCPU) + " vCPU is " + df_together['name'].iloc[0] + " from " + \
+                   df_together['provider'].iloc[0] + " which costs $" + str(df_together['hourly-on-demand'].iloc[0]) + \
+                   " hourly on demand."
+
+    elif (df_azure_match.empty == True) and (df_ec2_match.empty == True):
+        response = "This option is not available from AWS or Azure. Try another set of requirements."
 
     if not RAM:
         return jsonify({"message": "Missing 'RAM' parameter"}), 400
