@@ -33,8 +33,8 @@ def chat():
     #message = params.get('message')
     #history = params.get('history')
 
-    message = params.get('RAM')
-    history = params.get('VCPU')
+    message = params.get('message')
+    history = params.get('history')
     RAM = 8
     VCPU = 2
 
