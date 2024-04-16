@@ -33,8 +33,8 @@ def chat():
     #message = params.get('message')
     #history = params.get('history')
 
-    message = params.get('message')
-    history = params.get('history')
+    RAM = params.get('RAM')
+    VCPU = params.get('VCPU')
     RAM = 8
     VCPU = 2
 
@@ -76,12 +76,12 @@ def chat():
     print(response)
 
 
-    if not message:
-        return jsonify({"message": "Missing 'message' parameter"}), 400
+    if not RAM:
+        return jsonify({"message": "Missing 'RAM' parameter"}), 400
 
     response_data = {
-        "message": message,
-        "history": history,
+        "RAM": RAM,
+        "VCPU": VCPU,
         "response": response,
     }
     return jsonify(response_data), 200
