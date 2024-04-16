@@ -23,41 +23,49 @@ df_ec2['RAM'] = pd.to_numeric(df_ec2['RAM'])
 df_ec2['VCPU'] = pd.to_numeric(df_ec2['VCPU'])
 df_azure['RAM'] = pd.to_numeric(df_azure['RAM'])
 df_azure['VCPU'] = pd.to_numeric(df_azure['VCPU'])
-RAM = 8
-VCPU = 2
-df_ec2_match = df_ec2[df_ec2['VCPU'] == VCPU]
-df_ec2_match = df_ec2_match[df_ec2_match['RAM'] == RAM]
-df_ec2_match  = df_ec2_match.sort_values(by=['HOURLY ON DEMAND'])
 
-df_azure_match = df_azure[df_azure['VCPU'] == VCPU]
-df_azure_match = df_azure_match[df_azure_match['RAM'] == RAM]
-df_azure_match  = df_azure_match.sort_values(by=['HOURLY ON DEMAND'])
 
-df_together = pd.DataFrame()
-
-df_together =pd.concat([df_together, pd.DataFrame(['Azure',df_azure_match['INSTANCE'].iloc[0],
-                                 df_azure_match['HOURLY ON DEMAND'].iloc[0]]).T], ignore_index=True)
-
-df_together =pd.concat([df_together, pd.DataFrame(['Azure',df_azure_match['INSTANCE'].iloc[-1],
-                                 df_azure_match['HOURLY ON DEMAND'].iloc[-1]]).T],
-                                ignore_index=True)
-
-df_together =pd.concat([df_together, pd.DataFrame(['AWS',df_ec2_match['INSTANCE'].iloc[0],
-                                 df_ec2_match['HOURLY ON DEMAND'].iloc[0]]).T], ignore_index=True)
-
-df_together =pd.concat([df_together, pd.DataFrame(['AWS',df_ec2_match['INSTANCE'].iloc[-1],
-                                 df_ec2_match['HOURLY ON DEMAND'].iloc[-1]]).T],
-                                ignore_index=True)
-df_together .columns =['provider', 'name', 'hourly-on-demand']
-df_together['hourly-on-demand'] = pd.to_numeric(df_together['hourly-on-demand'])
-df_together = df_together.sort_values(by=['hourly-on-demand'])
 
 
 @app.route('/chat', methods=['POST'])
 def chat():
     params = request.get_json()
-    message = params.get('message')
+    #message = params.get('message')
     #history = params.get('history')
+
+    RAM = params.get('RAM')
+    VCPU = params.get('VCPU')
+    RAM = 8
+    VCPU = 2
+
+    df_ec2_match = df_ec2[df_ec2['VCPU'] == VCPU]
+    df_ec2_match = df_ec2_match[df_ec2_match['RAM'] == RAM]
+    df_ec2_match = df_ec2_match.sort_values(by=['HOURLY ON DEMAND'])
+
+    df_azure_match = df_azure[df_azure['VCPU'] == VCPU]
+    df_azure_match = df_azure_match[df_azure_match['RAM'] == RAM]
+    df_azure_match = df_azure_match.sort_values(by=['HOURLY ON DEMAND'])
+
+    df_together = pd.DataFrame()
+
+    df_together = pd.concat([df_together, pd.DataFrame(['Azure', df_azure_match['INSTANCE'].iloc[0],
+                                                        df_azure_match['HOURLY ON DEMAND'].iloc[0]]).T],
+                            ignore_index=True)
+
+    df_together = pd.concat([df_together, pd.DataFrame(['Azure', df_azure_match['INSTANCE'].iloc[-1],
+                                                        df_azure_match['HOURLY ON DEMAND'].iloc[-1]]).T],
+                            ignore_index=True)
+
+    df_together = pd.concat([df_together, pd.DataFrame(['AWS', df_ec2_match['INSTANCE'].iloc[0],
+                                                        df_ec2_match['HOURLY ON DEMAND'].iloc[0]]).T],
+                            ignore_index=True)
+
+    df_together = pd.concat([df_together, pd.DataFrame(['AWS', df_ec2_match['INSTANCE'].iloc[-1],
+                                                        df_ec2_match['HOURLY ON DEMAND'].iloc[-1]]).T],
+                            ignore_index=True)
+    df_together.columns = ['provider', 'name', 'hourly-on-demand']
+    df_together['hourly-on-demand'] = pd.to_numeric(df_together['hourly-on-demand'])
+    df_together = df_together.sort_values(by=['hourly-on-demand'])
 
     response = "Your lowest cost option for " + str(RAM) + "Gb RAM and " + str(VCPU) + " vCPU is " + \
                df_together['name'].iloc[0] + " from " + \
@@ -72,9 +80,10 @@ def chat():
         return jsonify({"message": "Missing 'message' parameter"}), 400
 
     response_data = {
-        "message": message,
-        "response": response,  #        "history": history,
+        "response": response,
     }
+    # "message": message,
+    # "history": history,
     return jsonify(response_data), 200
 
 

@@ -20,24 +20,13 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "message": {
+                  "RAM": {
                     "type": "string",
                     "description": "The message to send to the chat"
                   },
-                  "history": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string"
-                        },
-                        "response": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "description": "The chat history (optional)"
+                  "VCPU": {
+                    "type": "string",
+                    "description": "The message to send to the chat"
                   }
                 }
               }
@@ -52,28 +41,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "The message sent to the chat"
-                    },
                     "response": {
                       "type": "string",
                       "description": "The chat response"
-                    },
-                    "history": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "message": {
-                            "type": "string"
-                          },
-                          "response": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "description": "The updated chat history"
                     }
                   }
                 }
@@ -87,7 +57,11 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": {
+                    "RAM": {
+                      "type": "string",
+                      "description": "Error message explaining the missing parameter"
+                    },
+                   "VCPU": {
                       "type": "string",
                       "description": "Error message explaining the missing parameter"
                     }
