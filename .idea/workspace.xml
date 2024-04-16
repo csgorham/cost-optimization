@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86f292db-6d02-404e-8afa-876920b30f86" name="Changes" comment="first">
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-    </list>
+    <list default="true" id="86f292db-6d02-404e-8afa-876920b30f86" name="Changes" comment="first" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -101,7 +99,7 @@
       <option name="presentableId" value="Default" />
       <updated>1712883869708</updated>
       <workItem from="1712883870353" duration="18000" />
-      <workItem from="1712883891747" duration="34067000" />
+      <workItem from="1712883891747" duration="34497000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <option name="closed" value="true" />
