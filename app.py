@@ -33,10 +33,10 @@ def chat():
     #message = params.get('message')
     #history = params.get('history')
 
-    RAM = params.get('RAM')
-    VCPU = params.get('VCPU')
-    RAM = 8
-    VCPU = 2
+    RAM = int(params.get('RAM'))
+    VCPU = int(params.get('VCPU'))
+    #RAM = 8
+    #VCPU = 2
 
     df_ec2_match = df_ec2[df_ec2['VCPU'] == VCPU]
     df_ec2_match = df_ec2_match[df_ec2_match['RAM'] == RAM]
