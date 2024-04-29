@@ -44,7 +44,9 @@ def chat(RAM=1, VCPU=1, service=1):
     if VCPU is None:
         VCPU = "1"
 
-    if type[0] == 'd' or 'D':
+    first_char = chr(ord(type[0])).lower()
+
+    if first_char is 'd':
 
         df_db_reqservice_type = df_db.loc[df_db['Service'] == service, 'Type']
         df_db_reqservice_cloud = df_db.loc[df_db['Service'] == service, 'Cloud Provider']
@@ -92,7 +94,7 @@ def chat(RAM=1, VCPU=1, service=1):
         "response": response,
     }
 
-    elif type[0] == 'v' or 'V':
+    elif first_char is 'v':
 
         RAM = float(''.join(filter(lambda x: x.isdigit() or x in '.', RAM)))
 
