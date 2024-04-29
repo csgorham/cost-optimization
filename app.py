@@ -33,18 +33,18 @@ df_azure['VCPU'] = pd.to_numeric(df_azure['VCPU'])
 @app.route('/chat', methods=['POST'])
 def chat(RAM=1, VCPU=1, service=1):
     params = request.get_json()
-    #message = params.get('message')
-    #history = params.get('history')
+    RAM = params.get('RAM')
+    VCPU = params.get('VCPU')
 
     type = params.get('type')
+    service = params.get('service')
 
-    if name is None:
-        name = "Guest"
-    if age is None:
-        age = "Unknown"
+    if RAM is None:
+        RAM = "1"
+    if VCPU is None:
+        VCPU = "1"
 
     if type[0] == 'd' or 'D':
-        service = params.get('service')
 
         df_db_reqservice_type = df_db.loc[df_db['Service'] == service, 'Type']
         df_db_reqservice_cloud = df_db.loc[df_db['Service'] == service, 'Cloud Provider']
@@ -92,10 +92,10 @@ def chat(RAM=1, VCPU=1, service=1):
     }
 
     if type[0] == 'v' or 'V':
-        RAM = params.get('RAM')
+#        RAM = params.get('RAM')
         RAM = float(''.join(filter(lambda x: x.isdigit() or x in '.', RAM)))
 
-        VCPU = params.get('VCPU')
+ #       VCPU = params.get('VCPU')
         VCPU = int(''.join(filter(lambda x: x.isdigit(), VCPU)))
 
         df_ec2_match = df_ec2[df_ec2['VCPU'] == VCPU]
