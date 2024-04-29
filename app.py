@@ -88,14 +88,14 @@ def chat(RAM=1, VCPU=1, service=1):
         response_data = {
         "RAM": 0,
         "VCPU": 0,
+        "type": type,
         "response": response,
     }
 
     elif type[0] == 'v' or 'V':
-#        RAM = params.get('RAM')
+
         RAM = float(''.join(filter(lambda x: x.isdigit() or x in '.', RAM)))
 
- #       VCPU = params.get('VCPU')
         VCPU = int(''.join(filter(lambda x: x.isdigit(), VCPU)))
 
         df_ec2_match = df_ec2[df_ec2['VCPU'] == VCPU]
@@ -176,6 +176,7 @@ def chat(RAM=1, VCPU=1, service=1):
         response_data = {
         "RAM": RAM,
         "VCPU": VCPU,
+        "type": type,
         "response": response,
     }
 

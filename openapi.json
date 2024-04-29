@@ -57,6 +57,10 @@
                       "type": "string",
                       "description": "The chat response"
                     },
+                    "type": {
+                      "type": "string",
+                      "description": "The chat response"
+                    },
                   "VCPU": {
                     "type": "string",
                     "description": "The message to send to the chat"
