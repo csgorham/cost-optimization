@@ -91,7 +91,7 @@ def chat(RAM=1, VCPU=1, service=1):
         "response": response,
     }
 
-    if type[0] == 'v' or 'V':
+    elif type[0] == 'v' or 'V':
 #        RAM = params.get('RAM')
         RAM = float(''.join(filter(lambda x: x.isdigit() or x in '.', RAM)))
 
@@ -178,6 +178,7 @@ def chat(RAM=1, VCPU=1, service=1):
         "VCPU": VCPU,
         "response": response,
     }
+
 
     return jsonify(response_data), 200
 
