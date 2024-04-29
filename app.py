@@ -31,12 +31,17 @@ df_azure['VCPU'] = pd.to_numeric(df_azure['VCPU'])
 
 
 @app.route('/chat', methods=['POST'])
-def chat():
+def chat(RAM=1, VCPU=1, service=1):
     params = request.get_json()
     #message = params.get('message')
     #history = params.get('history')
 
     type = params.get('type')
+
+    if name is None:
+        name = "Guest"
+    if age is None:
+        age = "Unknown"
 
     if type[0] == 'd' or 'D':
         service = params.get('service')
