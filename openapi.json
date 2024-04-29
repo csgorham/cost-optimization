@@ -27,6 +27,14 @@
                   "VCPU": {
                     "type": "string",
                     "description": "The message to send to the chat"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "The message to send to the chat"
+                  },
+                   "service": {
+                    "type": "string",
+                    "description": "The message to send to the chat"
                   }
                 }
               }

@@ -1,0 +1,10 @@
+Type,Cloud Provider,Service,Basic Minimum Price (Starting),Page
+Relational Database,AWS,RDS,Starting at $0.017 per hour,https://aws.amazon.com/rds/
+Relational Database,Azure,SQL Database,Starting at $0.008 per vCore-hour,https://azure.microsoft.com/en-us/products/azure-sql/database/
+Relational Database,Azure,Database for MySQL,Pay-per-use (compute and storage),https://azure.microsoft.com/en-us/products/mysql/
+Relational Database,Azure,Database for PostgreSQL,Pay-per-use (compute and storage),https://azure.microsoft.com/en-us/products/postgresql/
+Relational Database,Azure,Database for MariaDB,Pay-per-use (compute and storage),https://azure.microsoft.com/en-us/products/mariadb/
+NoSQL,AWS,DynamoDB,Starting at $0.00013 per hour,https://aws.amazon.com/dynamodb/
+NoSQL,AWS,Amazon DocumentDB,Starting at $0.279 per hour,https://aws.amazon.com/documentdb/
+NoSQL,AWS,Amazon Neptune,Starting at $0.25 per hour,https://aws.amazon.com/neptune/
+NoSQL,Azure,Azure Cosmos DB,Starting at $0.008 per RU/s-hour,https://azure.microsoft.com/en-us/products/cosmos-db/
