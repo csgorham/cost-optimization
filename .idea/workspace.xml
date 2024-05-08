@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86f292db-6d02-404e-8afa-876920b30f86" name="Changes" comment="first" />
+    <list default="true" id="86f292db-6d02-404e-8afa-876920b30f86" name="Changes" comment="first">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Amazon-Amazon-EC2-Instance-Types.csv" beforeDir="false" afterPath="$PROJECT_DIR$/pricing-data/Amazon-Amazon-EC2-Instance-Types.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Azure-Azure-Virtual-Machines.csv" beforeDir="false" afterPath="$PROJECT_DIR$/pricing-data/Azure-Azure-Virtual-Machines.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-first.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-login.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database-pricing.csv" beforeDir="false" afterPath="$PROJECT_DIR$/pricing-data/database-pricing.csv" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -78,6 +86,7 @@
       <recent name="$PROJECT_DIR$/.venv" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/pricing-data" />
       <recent name="$PROJECT_DIR$/templates" />
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -100,7 +109,7 @@
       <updated>1712883869708</updated>
       <workItem from="1712883870353" duration="18000" />
       <workItem from="1712883891747" duration="43706000" />
-      <workItem from="1714412773682" duration="6953000" />
+      <workItem from="1714412773682" duration="15978000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <option name="closed" value="true" />
